@@ -1,5 +1,5 @@
 # USAGE
-# python demo.py --base-model $CAFFE_ROOT/models/bvlc_googlenet \
+# python deepdream.py --base-model $CAFFE_ROOT/models/bvlc_googlenet \
 #	--image initial_images/fear_and_loathing/fal_01.jpg \
 #	--output examples/simple_fal.jpg
 

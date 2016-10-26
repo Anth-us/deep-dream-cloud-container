@@ -1,0 +1,6 @@
+deepdream:
+  build : .
+  volumes:
+    - ./container:/opt/deepdream
+  working_dir: /opt/deepdream
+  entrypoint: python deepdream.py --base-model /opt/deepdream/models/bvlc_googlenet --image inputs/input.jpg --output output/output.jpg
