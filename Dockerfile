@@ -93,6 +93,9 @@ RUN cd /opt/caffe && \
 # Run ldconfig again (not sure if needed)
 RUN ldconfig
 
+RUN cd /opt/caffe && \
+  (pip install pyyaml)
+
 # Prerequisite for the next step.
 RUN cd /opt/caffe && \
   (pip install Cython)
