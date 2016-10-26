@@ -14,9 +14,10 @@ The target host is [AWS EC2 instances](http://docs.aws.amazon.com/AWSEC2/latest/
 
 1. Get an EC2 g2.2xlarge with Amazon Linux
 2. Install Docker with yum: http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
-3. Install CUDA: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html  Driver download: http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run
-4. Install nvidia-docker using instructions for “other distributions”: https://github.com/NVIDIA/nvidia-docker
-5. Snap an AMI.
+3. Install Docker Compose: https://docs.docker.com/compose/install/
+4. Install CUDA: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html  Driver download: http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run
+5. Install nvidia-docker using instructions for “other distributions”: https://github.com/NVIDIA/nvidia-docker
+6. Snap an AMI.
 
 ## To run a compute container
 
