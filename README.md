@@ -22,7 +22,7 @@ The target host is [AWS EC2 instances](http://docs.aws.amazon.com/AWSEC2/latest/
 ## To run a compute container
 
 1. Boot g2.2xlarge from the AMI from above.
-2. start the plugin: ```nvidia-docker-plugin```
+2. start the plugin: ```sudo nvidia-docker-plugin```
 3. test nvidia-docker: ```nvidia-docker run --rm nvidia/cuda nvidia-smi```
 4. Clone this project to the EC2 instance.
 5. ```cd``` to this project folder and ```docker-compose up```

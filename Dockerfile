@@ -82,7 +82,8 @@ RUN cd /opt && \
 # Build Caffe core
 RUN cd /opt/caffe && \
   cp Makefile.config.example Makefile.config && \
-   echo "CPU_ONLY := 1" >> Makefile.config && \
+# This container will only run on a GPU-enabled instance unless you uncomment:
+#   echo "CPU_ONLY := 1" >> Makefile.config && \
   echo "CXX := /usr/bin/g++-4.6" >> Makefile.config && \
   sed -i 's/CXX :=/CXX ?=/' Makefile && \
   make all
