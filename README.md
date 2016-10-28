@@ -19,10 +19,14 @@ The target host is [AWS EC2 instances](http://docs.aws.amazon.com/AWSEC2/latest/
 5. Install nvidia-docker using instructions for “other distributions”: https://github.com/NVIDIA/nvidia-docker
 6. Snap an AMI.
 
-## To run a compute container
+## To run a compute container with docker-compose
 
 1. Boot g2.2xlarge from the AMI from above.
-2. start the plugin: ```sudo nvidia-docker-plugin```
+2. start the plugin: ```sudo nvidia-docker-plugin &```
 3. test nvidia-docker: ```nvidia-docker run --rm nvidia/cuda nvidia-smi```
 4. Clone this project to the EC2 instance.
 5. ```cd``` to this project folder and ```docker-compose up```
+
+## To run a compute container with nvidia-docker
+
+    nvidia-docker run -v `pwd`/container:/opt/deepdream deepdream-gpu /bin/bash -c "cd /opt/deepdream && python deepdream.py  --base-model /opt/caffe/models/bvlc_googlenet --image inputs/image.jpg --output outputs/output.jpg 2>&1 > log.html"
