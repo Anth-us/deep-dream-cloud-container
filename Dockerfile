@@ -81,12 +81,10 @@ RUN cd /opt && \
 
 # Build Caffe core
 RUN cd /opt/caffe && \
-  cp Makefile.config.example Makefile.config && \
-# This container will only run on a GPU-enabled instance unless you uncomment:
-#   echo "CPU_ONLY := 1" >> Makefile.config && \
-  echo "CXX := /usr/bin/g++-4.6" >> Makefile.config && \
-  sed -i 's/CXX :=/CXX ?=/' Makefile && \
-  make all
+    for req in $(cat python/requirements.txt) pydot; do pip install $req; done && \
+    mkdir build && cd build && \
+    cmake -DUSE_CUDNN=1 .. && \
+    make -j"$(nproc)"
 
 # Add ld-so.conf so it can find libcaffe.so
 #ADD caffe-ld-so.conf /etc/ld.so.conf.d/
@@ -109,11 +107,13 @@ RUN cd /opt/caffe && \
 #RUN NUMPY_EGG=`ls /usr/local/lib/python2.7/dist-packages | grep -i numpy` && \
 #  ln -s /usr/local/lib/python2.7/dist-packages/$NUMPY_EGG/numpy/core/include/numpy /usr/include/python2.7/numpy
 
-# Build Caffe python bindings
-RUN cd /opt/caffe && make pycaffe
+# Build Caffe python bindings.
+RUN cd /opt/caffe/build && \
+  cmake -DUSE_CUDNN=1 .. && \
+  make pycaffe
 
 # Make + run tests
-RUN cd /opt/caffe && make test && make runtest
+RUN cd /opt/caffe/build && make test && make runtest
 
 #Download GoogLeNet
 RUN /opt/caffe/scripts/download_model_binary.py /opt/caffe/models/bvlc_googlenet
