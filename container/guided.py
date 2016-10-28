@@ -1,5 +1,5 @@
 # USAGE
-# python demo.py --base-model $CAFFE_ROOT/models/bvlc_googlenet \
+# python guided.py --base-model $CAFFE_ROOT/models/bvlc_googlenet \
 #	--image initial_images/clouds.jpg \
 #	--guide-image initial_images/seed_images/starry_night.jpg \
 #	--output examples/output/seeded/clouds_and_starry_night.jpg

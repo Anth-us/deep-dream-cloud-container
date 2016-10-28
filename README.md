@@ -27,6 +27,10 @@ The target host is [AWS EC2 instances](http://docs.aws.amazon.com/AWSEC2/latest/
 4. Clone this project to the EC2 instance.
 5. ```cd``` to this project folder and ```docker-compose up```
 
-## To run a compute container with nvidia-docker
+# Calculate a Deep Dream image
 
-    nvidia-docker run -v `pwd`/container:/opt/deepdream deepdream-gpu /bin/bash -c "cd /opt/deepdream && python deepdream.py  --base-model /opt/caffe/models/bvlc_googlenet --image inputs/image.jpg --output outputs/output.jpg 2>&1 > log.html"
+    time sudo nvidia-docker run -v `pwd`/container:/opt/deepdream deepdream-gpu /bin/bash -c "cd /opt/deepdream && python deepdream.py  --base-model /opt/caffe/models/bvlc_googlenet --image inputs/image.jpg --output outputs/output.jpg 2>&1 > log.html"
+
+# Calculate a guided Deep Dream image
+
+    time sudo nvidia-docker run -v `pwd`/container:/opt/deepdream deepdream-gpu /bin/bash -c "cd /opt/deepdream && python guided.py  --base-model /opt/caffe/models/bvlc_googlenet --image inputs/miami-beach-1024.jpg --guide-image inputs/guide.jpg --output outputs/output.jpg --layer inception_4c/output 2>&1 > log.html"
