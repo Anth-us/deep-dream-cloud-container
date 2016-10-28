@@ -38,17 +38,27 @@ RUN apt-get update && apt-get install -y \
   python-sympy \
   python-nose
 
+# Add pin priority to some graphical packages to stop them installing and borking the build
+RUN echo "Package: xserver-xorg*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences
+RUN echo "Package: unity*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences
+RUN echo "Package: gnome*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences
+
+# Install CUDA headers for compiling things that use CUDA.
+RUN wget --progress=dot:giga https://developer.nvidia.com/compute/cuda/8.0/prod/local_installers/cuda-repo-ubuntu1404-8-0-local_8.0.44-1_amd64-deb
+# This is a separate step so that we can cache the CUDA download in a layer,
+# because otherwise working on this was a little painful.
+RUN dpkg -i cuda-repo-ubuntu1404-8-0-local_8.0.44-1_amd64-deb && \
+  apt-get update && \
+  apt-get -y install cuda
+
 # Use gcc 4.6
 RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-4.6 30 && \
   update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.6 30 && \
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 30 && \
   update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 30
 
-
-
 # Clone the Caffe repo
 RUN cd /opt && git clone https://github.com/BVLC/caffe.git
-
 
 # Glog
 RUN cd /opt && wget https://github.com/google/glog/archive/v0.3.4.tar.gz && \
@@ -121,3 +131,15 @@ RUN /opt/caffe/scripts/download_model_binary.py /opt/caffe/models/bvlc_googlenet
 # Install Bat Country
 RUN cd /opt/caffe && \
   (pip install bat-country)
+
+# Install CUDArray
+RUN git clone https://github.com/andersbll/cudarray.git && \
+  cd cudarray && \
+  make && \
+  make install && \
+  python setup.py install
+
+# Install DeepPy
+RUN git clone https://github.com/andersbll/deeppy.git && \
+  cd deeppy && \
+  python setup.py install
